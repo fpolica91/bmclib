@@ -75,5 +75,8 @@ func SetVirtualMediaFromInterfaces(ctx context.Context,
 	if len(bdSetters) == 0 {
 		return ok, metadata, multierror.Append(err, errors.New("no VirtualMediaSetter implementations found"))
 	}
+	for _, elem := range bdSetters {
+		fmt.Println("bdsettter elemn", elem)
+	}
 	return setVirtualMedia(ctx, kind, mediaURL, bdSetters, username, password)
 }

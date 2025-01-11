@@ -507,9 +507,8 @@ func (c *Client) SetVirtualMedia(ctx context.Context, kind string, mediaURL stri
 	ctx, span := c.traceprovider.Tracer(pkgName).Start(ctx, "SetVirtualMedia")
 
 	defer span.End()
-
 	ok, metadata, err := bmc.SetVirtualMediaFromInterfaces(ctx, kind, mediaURL, username, password, c.registry().GetDriverInterfaces())
-	fmt.Println("metadata", metadata)
+
 	c.setMetadata(metadata)
 	metadata.RegisterSpanAttributes(c.Auth.Host, span)
 

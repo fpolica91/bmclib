@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 360*time.Second)
 	defer cancel()
 
 	user := flag.String("user", "", "BMC username, required")
@@ -34,7 +34,9 @@ func main() {
 	log := logr.FromSlogHandler(l.Handler())
 
 	cl := bmclib.NewClient(*host, *user, *pass, bmclib.WithLogger(log))
-	// cl.Registry.Drivers = cl.Registry.Using("")
+	// set timeout to 120 seconds
+	cl.Registry.Drivers = cl.Registry.Using("redfish")
+
 	if err := cl.Open(ctx); err != nil {
 		panic(err)
 	}
@@ -42,8 +44,6 @@ func main() {
 
 	ok, err := cl.SetVirtualMedia(ctx, "CD", *isoURL, *cifsUser, *cifsPass)
 	if err != nil {
-		fmt.Println("error", err)
-		log.Info("debugging", "metadata", cl.GetMetadata())
 		panic(err)
 	}
 	if !ok {

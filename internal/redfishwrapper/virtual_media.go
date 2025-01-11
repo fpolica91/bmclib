@@ -12,8 +12,10 @@ import (
 
 // Set the virtual media attached to the system, or just eject everything if mediaURL is empty.
 func (c *Client) SetVirtualMedia(ctx context.Context, kind string, mediaURL string, username string, password string) (bool, error) {
+
 	managers, err := c.Managers(ctx)
 	if err != nil {
+
 		return false, err
 	}
 	if len(managers) == 0 {
@@ -39,7 +41,9 @@ func (c *Client) SetVirtualMedia(ctx context.Context, kind string, mediaURL stri
 		if err != nil {
 			return false, err
 		}
+
 		if len(virtualMedia) == 0 {
+			fmt.Println("no virtual media found")
 			return false, errors.New("no virtual media found")
 		}
 
