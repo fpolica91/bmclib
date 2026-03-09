@@ -46,6 +46,7 @@ var (
 		providers.FeatureGetBiosConfiguration,
 		providers.FeatureSetBiosConfiguration,
 		providers.FeatureResetBiosConfiguration,
+		providers.FeatureVirtualMedia,
 	}
 
 	errManufacturerUnknown = errors.New("error identifying device manufacturer")
@@ -235,6 +236,11 @@ func (c *Conn) SetBiosConfiguration(ctx context.Context, biosConfig map[string]s
 // ResetBiosConfiguration resets the BIOS configuration settings back to 'factory defaults' via the BMC
 func (c *Conn) ResetBiosConfiguration(ctx context.Context) (err error) {
 	return c.redfishwrapper.ResetBiosConfiguration(ctx)
+}
+
+// SetVirtualMedia sets the virtual media
+func (c *Conn) SetVirtualMedia(ctx context.Context, kind string, mediaURL string) (ok bool, err error) {
+	return c.redfishwrapper.SetVirtualMedia(ctx, kind, mediaURL)
 }
 
 // SendNMI tells the BMC to issue an NMI to the device

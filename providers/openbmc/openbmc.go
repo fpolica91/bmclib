@@ -34,6 +34,7 @@ var (
 		providers.FeatureFirmwareUploadInitiateInstall,
 		providers.FeatureFirmwareTaskStatus,
 		providers.FeatureInventoryRead,
+		providers.FeatureVirtualMedia,
 	}
 
 	errNotOpenBMCDevice = errors.New("not an OpenBMC device")
@@ -183,6 +184,11 @@ func (c *Conn) Inventory(ctx context.Context) (device *common.Device, err error)
 // BmcReset power cycles the BMC
 func (c *Conn) BmcReset(ctx context.Context, resetType string) (ok bool, err error) {
 	return c.redfishwrapper.BMCReset(ctx, resetType)
+}
+
+// SetVirtualMedia sets the virtual media
+func (c *Conn) SetVirtualMedia(ctx context.Context, kind string, mediaURL string) (ok bool, err error) {
+	return c.redfishwrapper.SetVirtualMedia(ctx, kind, mediaURL)
 }
 
 // SendNMI tells the BMC to issue an NMI to the device
